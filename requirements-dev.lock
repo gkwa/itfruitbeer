@@ -27,3 +27,7 @@ pathspec==0.12.1
     # via black
 platformdirs==4.2.0
     # via black
+tomli==2.0.1
+    # via black
+typing-extensions==4.10.0
+    # via black

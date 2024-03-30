@@ -10,7 +10,7 @@ dependencies = [
     "md-toc>=8.2.3",
 ]
 readme = "README.md"
-requires-python = ">= 3.12"
+requires-python = ">= 3.8"
 
 [project.scripts]
 itfruitbeer = "itfruitbeer:main"
