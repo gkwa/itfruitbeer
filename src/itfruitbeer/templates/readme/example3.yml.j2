@@ -20,7 +20,7 @@ Check last 10 lines or so from here and you'll notice the `touch /tmp/$(date +%s
 {% block footer_commands -%}
 # check for errors from boot scripts:
 lxc exec ubc -- less -RSi /var/log/cloud-init.log | grep 'Exit code:'
-lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
+lxc exec ubc -- less -RSi /var/log/cloud-init-output.log | grep WARNING
 {% endblock %}
 
 {% block cloud %}
