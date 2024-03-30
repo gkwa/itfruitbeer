@@ -203,6 +203,9 @@ lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 # assign profile ubcp to container ubc
 lxc profile add ubc ubcp
 lxc ls
+lxc exec ubc -- less -RSi /var/log/cloud-init.log | grep 'Exit code:'
+lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
+
 
 ```
 
@@ -211,8 +214,3 @@ We can see failure on script1 in cloud init logs.
 Search for "Exit code" in `/var/log/cloud-init.log`.  There it shows the runcmd failed since script1 exited with nonzero exit code.
 
 Check last 10 lines or so from here and you'll notice the `touch /tmp/$(date +%s).txt` from script2 never ran since script1 failed.
-
-```bash
-lxc exec ubc -- less -RSi /var/log/cloud-init.log
-lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
-```
