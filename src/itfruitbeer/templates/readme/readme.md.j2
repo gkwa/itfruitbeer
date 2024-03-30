@@ -1,0 +1,19 @@
+{% import "readme/macros.j2" as macros -%}
+
+<!--TOC-->
+
+# Purpose
+
+Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this stuff, so I'm writing it down.  Each example is mean to include all steps.
+
+# example: create container based off ubuntu 22.04
+
+{% include "readme/example1.yml.j2" %}
+
+# example: assign a network profile to container
+
+{% include "readme/example2.yml.j2" %}
+
+# example: run a script at boot
+
+{% include "readme/example3.yml.j2" %}

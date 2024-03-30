@@ -1,0 +1,9 @@
+{% macro rmcontainer(name) -%}
+lxc ls --format=json | jq 'map(select(.name == "{{ name }}")) | .[] | .name' | xargs --no-run-if-empty -I {} lxc delete --force {}
+{%- endmacro %}
+
+{% macro rmprofile(name) -%}
+lxc profile list --format=json |
+    jq --raw-output 'map(select(.name == "{{ name }}") | .name) | first // ""' |
+    xargs --no-run-if-empty --max-args=1 lxc profile delete
+{%- endmacro %}
