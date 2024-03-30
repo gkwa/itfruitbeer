@@ -32,7 +32,8 @@ lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 # assign profile ubcp to container ubc
 lxc profile add ubc ubcp
 lxc ls
-{%- block footer_commands %}{% endblock %}
+
+{% block footer_commands %}{% endblock %}
 {% endblock %}
 
 {% block example_footer %}
