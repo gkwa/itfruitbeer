@@ -2,25 +2,8 @@
 
 - [Purpose](#purpose)
 - [example: create container based off ubuntu 22.04](#example-create-container-based-off-ubuntu-2204)
-- [remove container ubc if it exists](#remove-container-ubc-if-it-exists)
-- [launch ubuntu 22.04 container and name it ubc](#launch-ubuntu-2204-container-and-name-it-ubc)
 - [example: assign a network profile to container](#example-assign-a-network-profile-to-container)
-- [create cloud-init for container ubc](#create-cloud-init-for-container-ubc)
-- [create lxc network profile we'll use for this ubc container](#create-lxc-network-profile-well-use-for-this-ubc-container)
-- [delete old ubc container](#delete-old-ubc-container)
-- [remove ubcp network profile if it exists](#remove-ubcp-network-profile-if-it-exists)
-- [create container profile ubcp](#create-container-profile-ubcp)
-- [create container ubc](#create-container-ubc)
-- [assign profile ubcp to container ubc](#assign-profile-ubcp-to-container-ubc)
 - [example: run a script at boot](#example-run-a-script-at-boot)
-- [check for errors from boot scripts:](#check-for-errors-from-boot-scripts)
-- [create cloud-init for container ubc](#create-cloud-init-for-container-ubc-1)
-- [create lxc network profile we'll use for this ubc container](#create-lxc-network-profile-well-use-for-this-ubc-container-1)
-- [delete old ubc container](#delete-old-ubc-container-1)
-- [remove ubcp network profile if it exists](#remove-ubcp-network-profile-if-it-exists-1)
-- [create container profile ubcp](#create-container-profile-ubcp-1)
-- [create container ubc](#create-container-ubc-1)
-- [assign profile ubcp to container ubc](#assign-profile-ubcp-to-container-ubc-1)
 
 <!--TOC-->
 
@@ -30,14 +13,9 @@ Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this s
 
 # example: create container based off ubuntu 22.04
 
-#!/usr/bin/env bash
 
-# remove container ubc if it exists
-lxc ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} lxc delete --force {}
-
-# launch ubuntu 22.04 container and name it ubc
-lxc launch ubuntu:22.04 ubc
-lxc ls
+- remove container  if it exists
+- launch ubuntu container and arbitrarily name it ubc
 
 
 ```bash
@@ -47,6 +25,12 @@ apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
 
+# remove container ubc if it exists
+lxc ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} lxc delete --force {}
+
+# launch ubuntu 22.04 container and name it ubc
+lxc launch ubuntu:22.04 ubc
+lxc ls
 ```
 
 
@@ -54,7 +38,16 @@ lxc ls
 
 # example: assign a network profile to container
 
-#!/usr/bin/env bash
+
+Use cloud-init to allow me ssh access, install some some packages and reboot contanier.
+
+
+```bash
+# lxc install
+apt-get update
+apt-get --assume-yes install lxc lxc-utils jq
+lxd init --auto
+lxc ls
 
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF
@@ -107,9 +100,20 @@ lxc ls
 
 
 
+```
 
 
-Use cloud-init to allow me ssh access, install some some packages and reboot contanier.
+
+
+
+# example: run a script at boot
+
+
+Same as previous but add run once script using runcmd: in yaml.
+
+When cloud-init sees runcmd:, then it generates `/var/lib/cloud/instance/scripts/runcmd` and runs it.
+
+In this example I intentionally fail script1 in order to see if the next script will run or whether all subsequent scripts fail.
 
 
 ```bash
@@ -119,22 +123,21 @@ apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
 
-```
+# create cloud-init for container ubc
+cat >cloud-init-ubc.yml<<EOF
+#cloud-config
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
 
+packages:
+- mlocate
+- wget
 
-
-
-# example: run a script at boot
-
-#!/usr/bin/env bash
-
-
-
-# check for errors from boot scripts:
-lxc exec ubc -- less -RSi /var/log/cloud-init.log | grep 'Exit code:'
-lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
-
-
+users:
+- name: root
+  ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDn/xarP47M2rz9UtE6jPQMMhBDJOKbWa1LJ/JRD6G6d3KNekq0rl65e7+0keIXrH7+rkVHn1jtqbHdXiDR1EngjcX1IAZyosmIqkTj9MAVTc+ZmoOLiJZYxCZ812Abnai/CM3Q77cQIFHUP/wb0fFdsGx9Szfobdb722K4jxvbyYwjMGJUHWmdFYpwPz7bqzX/s+3Ij9SPyQG9jT66tVmcIjiEloLgWF2DztT31OpvJHrtn/JuB8GDtNEsBezw+ga1ubUGjvCZ4z2iauB2kjesh2nhM0xpBDt9pthKGBoTr36gxJyhzUJk0pGbfJIkaxuf8mBnIxibR0+B1B8hT4GP tom
 
 runcmd:
 - set -x
@@ -169,25 +172,6 @@ write_files:
   path: /root/script2.sh
   append: true
   permissions: "0755"
-
-
-#!/usr/bin/env bash
-
-# create cloud-init for container ubc
-cat >cloud-init-ubc.yml<<EOF
-#cloud-config
-package_update: true
-package_upgrade: true
-package_reboot_if_required: true
-
-packages:
-- mlocate
-- wget
-
-users:
-- name: root
-  ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDn/xarP47M2rz9UtE6jPQMMhBDJOKbWa1LJ/JRD6G6d3KNekq0rl65e7+0keIXrH7+rkVHn1jtqbHdXiDR1EngjcX1IAZyosmIqkTj9MAVTc+ZmoOLiJZYxCZ812Abnai/CM3Q77cQIFHUP/wb0fFdsGx9Szfobdb722K4jxvbyYwjMGJUHWmdFYpwPz7bqzX/s+3Ij9SPyQG9jT66tVmcIjiEloLgWF2DztT31OpvJHrtn/JuB8GDtNEsBezw+ga1ubUGjvCZ4z2iauB2kjesh2nhM0xpBDt9pthKGBoTr36gxJyhzUJk0pGbfJIkaxuf8mBnIxibR0+B1B8hT4GP tom
 EOF
 
 # create lxc network profile we'll use for this ubc container
@@ -222,22 +206,15 @@ lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 lxc profile add ubc ubcp
 lxc ls
 
+# check for errors from boot scripts:
+lxc exec ubc -- less -RSi /var/log/cloud-init.log | grep 'Exit code:'
+lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
 
-
-
-
-Same as previous but add run once script using runcmd: in yaml.
-
-When cloud-init sees runcmd:, then it generates `/var/lib/cloud/instance/scripts/runcmd` and runs it.
-
-In this example I intentionally fail script1 in order to see if the next script will run or whether all subsequent scripts fail.
-
-
-```bash
-# lxc install
-apt-get update
-apt-get --assume-yes install lxc lxc-utils jq
-lxd init --auto
-lxc ls
 
 ```
+
+We can see failure on script1 in cloud init logs.
+
+Search for "Exit code" in `/var/log/cloud-init.log`.  There it shows the runcmd failed since script1 exited with nonzero exit code.
+
+Check last 10 lines or so from here and you'll notice the `touch /tmp/$(date +%s).txt` from script2 never ran since script1 failed.
