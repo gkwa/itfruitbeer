@@ -89,7 +89,7 @@ lxc profile list --format=json |
 
 # create container profile ubcp
 lxc profile create ubcp
-lxc profile edit ubcp <ubcp-net-profile.yml
+lxc profile edit ubcp < ubcp-net-profile.yml
 
 # create container ubc
 lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
@@ -197,7 +197,7 @@ lxc profile list --format=json |
 
 # create container profile ubcp
 lxc profile create ubcp
-lxc profile edit ubcp <ubcp-net-profile.yml
+lxc profile edit ubcp < ubcp-net-profile.yml
 
 # create container ubc
 lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
