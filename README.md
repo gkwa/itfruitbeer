@@ -206,7 +206,6 @@ lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 lxc profile add ubc ubcp
 lxc ls
 
-
 # check for errors from boot scripts:
 lxc exec ubc -- less -RSi /var/log/cloud-init.log | grep 'Exit code:'
 lxc exec ubc -- less -RSi /var/log/cloud-init-output.log

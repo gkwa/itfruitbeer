@@ -17,7 +17,7 @@ Search for "Exit code" in `/var/log/cloud-init.log`.  There it shows the runcmd 
 Check last 10 lines or so from here and you'll notice the `touch /tmp/$(date +%s).txt` from script2 never ran since script1 failed.
 {% endblock %}
 
-{% block footer_commands %}
+{% block footer_commands -%}
 # check for errors from boot scripts:
 lxc exec ubc -- less -RSi /var/log/cloud-init.log | grep 'Exit code:'
 lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
