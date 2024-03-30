@@ -4,7 +4,7 @@
 Use cloud-init to allow me ssh access, install some some packages and reboot contanier.
 {% endblock %}
 
-{% block example_code %}
+{% block bash_commands %}
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF
 {% include 'readme/cloud-init.yml.j2' %}

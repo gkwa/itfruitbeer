@@ -5,11 +5,4 @@
 - launch ubuntu container and arbitrarily name it ubc
 {% endblock %}
 
-{% block example_code %}
-# remove container ubc if it exists
-{{ macros.rmcontainer('ubc') }}
-
-# launch ubuntu 22.04 container and name it ubc
-lxc launch ubuntu:22.04 ubc
-lxc ls
-{%- endblock %}
+{% block bash_commands %}{% endblock %}
