@@ -74,7 +74,7 @@ incus profile create ubcp
 incus profile edit ubcp <ubcp-net-profile.yml
 
 # create container ubc
-incus launch images:ubuntu/22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
+incus launch images:ubuntu/22.04/cloud ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 
 # assign profile ubcp to container ubc
 incus profile add ubc ubcp
