@@ -4,17 +4,17 @@
 
 # purpose
 
-Create quicstart for lxc and cloud-init.  I keep forgetting this stuff, so I'm writing it down.
+Create quicstart for incus and cloud-init.  I keep forgetting this stuff, so I'm writing it down.
 
-# getting started: install lxc
+# getting started: install incus
 
 ```bash
 {%- block initial_setup %}
-# lxc install
+# incus install
 apt-get update
-apt-get --assume-yes install lxc lxc-utils jq
+apt-get --assume-yes install incus incus-utils jq
 lxd init --auto
-lxc ls
+incus ls
 {%- endblock %}
 ```
 

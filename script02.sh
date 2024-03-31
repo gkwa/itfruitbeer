@@ -16,7 +16,7 @@ users:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDn/xarP47M2rz9UtE6jPQMMhBDJOKbWa1LJ/JRD6G6d3KNekq0rl65e7+0keIXrH7+rkVHn1jtqbHdXiDR1EngjcX1IAZyosmIqkTj9MAVTc+ZmoOLiJZYxCZ812Abnai/CM3Q77cQIFHUP/wb0fFdsGx9Szfobdb722K4jxvbyYwjMGJUHWmdFYpwPz7bqzX/s+3Ij9SPyQG9jT66tVmcIjiEloLgWF2DztT31OpvJHrtn/JuB8GDtNEsBezw+ga1ubUGjvCZ4z2iauB2kjesh2nhM0xpBDt9pthKGBoTr36gxJyhzUJk0pGbfJIkaxuf8mBnIxibR0+B1B8hT4GP tom
 EOF
 
-# create lxc network profile we'll use for this ubc container
+# create incus network profile we'll use for this ubc container
 cat >ubcp-net-profile.yml <<EOF
 devices:
   myport22:
@@ -30,18 +30,18 @@ devices:
 EOF
 
 # delete old ubc container
-lxc ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} lxc delete --force {}
+incus ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
 
 # remove ubcp network profile if it exists
-lxc profile list --format=json | jq --raw-output 'map(select(.name == "ubcp") | .name) | .[]' | xargs --no-run-if-empty --max-args=1 lxc profile delete
+incus profile list --format=json | jq --raw-output 'map(select(.name == "ubcp") | .name) | .[]' | xargs --no-run-if-empty --max-args=1 incus profile delete
 
 # create container profile ubcp
-lxc profile create ubcp
-lxc profile edit ubcp <ubcp-net-profile.yml
+incus profile create ubcp
+incus profile edit ubcp <ubcp-net-profile.yml
 
 # create container ubc
-lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
+incus launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 
 # assign profile ubcp to container ubc
-lxc profile add ubc ubcp
-lxc ls
+incus profile add ubc ubcp
+incus ls
