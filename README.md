@@ -3,7 +3,7 @@
 - [purpose](#purpose)
 - [getting started: install lxc](#getting-started-install-lxc)
 - [example: create container based off ubuntu 22.04](#example-create-container-based-off-ubuntu-2204)
-- [example: assign a network profile to container](#example-assign-a-network-profile-to-container)
+- [example: assign a network profile to a container](#example-assign-a-network-profile-to-a-container)
 - [example: run some scripts at boot](#example-run-some-scripts-at-boot)
 
 <!--TOC-->
@@ -39,7 +39,7 @@ lxc ls
 ```
 
 
-# example: assign a network profile to container
+# example: assign a network profile to a container
 
 
 Use cloud-init to allow me ssh access, install some some packages and reboot contanier.
