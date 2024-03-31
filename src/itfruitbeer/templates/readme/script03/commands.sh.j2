@@ -40,8 +40,3 @@ write_files:
   append: true
   permissions: "0755"
 {% endblock %}
-
-{% block content %}
-#!/usr/bin/env bash
-{{ super() }}
-{% endblock %}
