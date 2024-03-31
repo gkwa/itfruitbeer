@@ -6,7 +6,7 @@ import jinja2
 def get_template(template_name):
     TEMPLATES_PATH = pathlib.Path(__file__).resolve().parent / "templates"
     loader = jinja2.FileSystemLoader(searchpath=TEMPLATES_PATH)
-    env = jinja2.Environment(loader=loader)
+    env = jinja2.Environment(loader=loader, keep_trailing_newline=True)
     return env.get_template(template_name)
 
 
