@@ -17,7 +17,7 @@ Create quickstart guide for incus and cloud-init.  I keep forgetting this stuff,
 FIXME: inline these scripts
 
 ```bash
-# file: incus.sh
+# incus.sh
 curl https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-kibbly-stable-sources-on-ubuntu.sh | sudo bash
 curl https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-incus-on-ubuntu.sh | sudo bash
 
@@ -32,7 +32,7 @@ incus admin init --auto
 
 
 ```bash
-# file: script01.sh
+# script01.sh
 # remove container ubc if it exists
 incus ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
 
@@ -49,7 +49,7 @@ Use [cloud-init](https://cloudinit.readthedocs.io/en/latest/howto/run_cloud_init
 
 
 ```bash
-# file: script02.sh
+# script02.sh
 # create a cloud-init config for container ubc
 cat >cloud-init-ubc.yml <<EOF
 #cloud-config
@@ -110,7 +110,7 @@ In this example I intentionally make script1 fail in order to see if the next sc
 
 
 ```bash
-# file: script03.sh
+# script03.sh
 # create a cloud-init config for container ubc
 cat >cloud-init-ubc.yml <<EOF
 #cloud-config
