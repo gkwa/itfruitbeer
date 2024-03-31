@@ -22,9 +22,9 @@ def main() -> int:
     md_toc.write_string_on_file_between_markers(outfile, toc, "<!--TOC-->")
 
     scripts = [
-        Script(outfile="script01.sh", tmpl="readme/script01/script.sh.j2"),
-        Script(outfile="script02.sh", tmpl="readme/script02/script.sh.j2"),
-        Script(outfile="script03.sh", tmpl="readme/script03/script.sh.j2"),
+        Script(outfile="script01.sh", tmpl="script01/script.sh.j2"),
+        Script(outfile="script02.sh", tmpl="script02/script.sh.j2"),
+        Script(outfile="script03.sh", tmpl="script03/script.sh.j2"),
     ]
 
     for script in scripts:
