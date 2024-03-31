@@ -14,9 +14,10 @@ Create quickstart guide for incus and cloud-init.  I keep forgetting this stuff,
 
 # getting started: install incus
 
+FIXME: inline these scripts
+
 ```bash
 # file: incus.sh
-# FIXME: inline these scripts
 curl https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-kibbly-stable-sources-on-ubuntu.sh | sudo bash
 curl https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-incus-on-ubuntu.sh | sudo bash
 
