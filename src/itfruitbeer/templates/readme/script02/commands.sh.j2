@@ -1,15 +1,14 @@
 {% import 'readme/macros.j2' as macros %}
 {%- block bash_shebang %}{% endblock %}
-
 # create cloud-init for container ubc
-cat >cloud-init-ubc.yml<<EOF
+cat >cloud-init-ubc.yml <<EOF
 {% include 'readme/cloud-init.yml.j2' %}
-{% block cloud %}{% endblock -%}
+{%- block cloud %}{% endblock -%}
 EOF
 
 # create lxc network profile we'll use for this ubc container
-cat >ubcp-net-profile.yml<<EOF
-{% include 'readme/lxc-profile1.yml.j2' %}
+cat >ubcp-net-profile.yml <<EOF
+{% include 'readme/lxc-profile1.yml.j2' -%}
 EOF
 
 # delete old ubc container
@@ -20,7 +19,7 @@ EOF
 
 # create container profile ubcp
 lxc profile create ubcp
-lxc profile edit ubcp < ubcp-net-profile.yml
+lxc profile edit ubcp <ubcp-net-profile.yml
 
 # create container ubc
 lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
@@ -28,5 +27,4 @@ lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 # assign profile ubcp to container ubc
 lxc profile add ubc ubcp
 lxc ls
-{% block footer_commands %}
-{%- endblock %}
+{% block footer_commands -%}{%- endblock -%}

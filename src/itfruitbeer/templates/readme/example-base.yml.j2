@@ -1,15 +1,6 @@
-{% import "readme/macros.j2" as macros -%}
-
 {% block example_description %}{% endblock %}
 
 ```bash
-{% block initial_setup %}
-# lxc install
-apt-get update
-apt-get --assume-yes install lxc lxc-utils jq
-lxd init --auto
-lxc ls
-{% endblock %}
-{% block bash_commands %}{% endblock %}
+{%- block bash_commands -%}{%- endblock -%}
 ```
-{% block example_footer %}{% endblock %}
+{% block example_footer -%}{%- endblock -%}

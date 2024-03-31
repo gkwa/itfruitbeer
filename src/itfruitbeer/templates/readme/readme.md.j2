@@ -2,16 +2,21 @@
 
 <!--TOC-->
 
-# Purpose
+# purpose
 
-Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this stuff, so I'm writing it down.  Each example is mean to include all steps.
+Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this stuff, so I'm writing it down.  Each example is meant to include all steps.
 
-# Getting started: install lxc
+# getting started: install lxc
 
-
-
-
-
+```bash
+{%- block initial_setup %}
+# lxc install
+apt-get update
+apt-get --assume-yes install lxc lxc-utils jq
+lxd init --auto
+lxc ls
+{%- endblock %}
+```
 
 # example: create container based off ubuntu 22.04
 
@@ -21,6 +26,6 @@ Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this s
 
 {% include "readme/example2.yml.j2" %}
 
-# example: run a script at boot
+# example: run some scripts at boot
 
 {% include "readme/example3.yml.j2" %}

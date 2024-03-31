@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # remove container ubc if it exists
 lxc ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} lxc delete --force {}
 

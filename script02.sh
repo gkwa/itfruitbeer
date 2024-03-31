@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
 # create cloud-init for container ubc
-cat >cloud-init-ubc.yml<<EOF
+cat >cloud-init-ubc.yml <<EOF
 #cloud-config
 package_update: true
 package_upgrade: true
@@ -15,11 +14,10 @@ users:
 - name: root
   ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDn/xarP47M2rz9UtE6jPQMMhBDJOKbWa1LJ/JRD6G6d3KNekq0rl65e7+0keIXrH7+rkVHn1jtqbHdXiDR1EngjcX1IAZyosmIqkTj9MAVTc+ZmoOLiJZYxCZ812Abnai/CM3Q77cQIFHUP/wb0fFdsGx9Szfobdb722K4jxvbyYwjMGJUHWmdFYpwPz7bqzX/s+3Ij9SPyQG9jT66tVmcIjiEloLgWF2DztT31OpvJHrtn/JuB8GDtNEsBezw+ga1ubUGjvCZ4z2iauB2kjesh2nhM0xpBDt9pthKGBoTr36gxJyhzUJk0pGbfJIkaxuf8mBnIxibR0+B1B8hT4GP tom
-
 EOF
 
 # create lxc network profile we'll use for this ubc container
-cat >ubcp-net-profile.yml<<EOF
+cat >ubcp-net-profile.yml <<EOF
 devices:
   myport22:
     connect: tcp:127.0.0.1:22
@@ -29,7 +27,6 @@ devices:
     connect: tcp:127.0.0.1:80
     listen: tcp:0.0.0.0:80
     type: proxy
-
 EOF
 
 # delete old ubc container
@@ -42,7 +39,7 @@ lxc profile list --format=json |
 
 # create container profile ubcp
 lxc profile create ubcp
-lxc profile edit ubcp < ubcp-net-profile.yml
+lxc profile edit ubcp <ubcp-net-profile.yml
 
 # create container ubc
 lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
