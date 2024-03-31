@@ -1,0 +1,47 @@
+{% extends 'readme/script02/commands.sh.j2' %}
+
+{% block footer_commands %}
+lxc exec ubc -- less -RSi /var/log/cloud-init.log
+lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
+{% endblock %}
+
+{% block cloud %}
+runcmd:
+- set -x
+- set -e # this prevents script2 from running since script1 fails
+- set -u
+- bash -xe /root/script1.sh
+- bash -xe /root/script2.sh
+
+write_files:
+- content: |
+    #!/usr/bin/env bash
+
+    set -x
+    set -e
+    set -u
+
+    exit 1 # intentionally fail
+
+  path: /root/script1.sh
+  append: true
+  permissions: "0755"
+
+- content: |
+    #!/usr/bin/env bash
+
+    set -x
+    set -e
+    set -u
+
+    touch /tmp/$(date +%s).txt
+
+  path: /root/script2.sh
+  append: true
+  permissions: "0755"
+{% endblock %}
+
+{% block content %}
+#!/usr/bin/env bash
+{{ super() }}
+{% endblock %}

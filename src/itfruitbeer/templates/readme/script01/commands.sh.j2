@@ -1,9 +1,4 @@
-{% extends 'readme/bash.sh.j2' %}
 {% import 'readme/macros.j2' as macros %}
-
-{% block bash_shebang %}#!/usr/bin/env bash{% endblock %}
-
-{% block bash_commands %}
 
 # remove container ubc if it exists
 {{ macros.rmcontainer('ubc') }}
@@ -11,4 +6,3 @@
 # launch ubuntu 22.04 container and name it ubc
 lxc launch ubuntu:22.04 ubc
 lxc ls
-{%- endblock %}

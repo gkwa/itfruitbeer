@@ -1,13 +1,12 @@
 {% extends "readme/example2.yml.j2" %}
 
 {% block example_description %}
-Same as previous but add run once script using runcmd: in yaml.
+Same as previous example but add run-once script using `runcmd:` in cloud-init.yml.
 
-When cloud-init sees runcmd:, then it generates `/var/lib/cloud/instance/scripts/runcmd` and runs it.
+When cloud-init sees runcmd element, then it generates `/var/lib/cloud/instance/scripts/runcmd` and runs it.
 
-In this example I intentionally fail script1 in order to see if the next script will run or whether all subsequent scripts fail.
+In this example I intentionally make script1 fail in order to see if the next script will run or whether all subsequent scripts fail.
 {% endblock %}
-
 
 {% block example_footer %}
 We can see failure on script1 in cloud init logs.
@@ -17,44 +16,6 @@ Search for "Exit code" in `/var/log/cloud-init.log`.  There it shows the runcmd 
 Check last 10 lines or so from here and you'll notice the `touch /tmp/$(date +%s).txt` from script2 never ran since script1 failed.
 {% endblock %}
 
-{% block footer_commands -%}
-# check for errors from boot scripts:
-lxc exec ubc -- less -RSi /var/log/cloud-init.log | grep 'Exit code:'
-lxc exec ubc -- less -RSi /var/log/cloud-init-output.log | grep WARNING
-{% endblock %}
-
-{% block cloud %}
-runcmd:
-- set -x
-- set -e # this prevents script2 from running since script1 fails
-- set -u
-- bash -xe /root/script1.sh
-- bash -xe /root/script2.sh
-
-write_files:
-- content: |
-    #!/usr/bin/env bash
-
-    set -x
-    set -e
-    set -u
-
-    exit 1 # intentionally fail
-
-  path: /root/script1.sh
-  append: true
-  permissions: "0755"
-
-- content: |
-    #!/usr/bin/env bash
-
-    set -x
-    set -e
-    set -u
-
-    touch /tmp/$(date +%s).txt
-
-  path: /root/script2.sh
-  append: true
-  permissions: "0755"
+{% block bash_commands %}
+{% include 'readme/script03/commands.sh.j2' %}
 {% endblock %}

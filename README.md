@@ -14,7 +14,7 @@ Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this s
 # example: create container based off ubuntu 22.04
 
 
-- remove container  if it exists
+- remove container ubc if it exists
 - launch ubuntu container and arbitrarily name it ubc
 
 
@@ -23,6 +23,15 @@ Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this s
 apt-get update
 apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
+lxc ls
+
+
+
+# remove container ubc if it exists
+lxc ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} lxc delete --force {}
+
+# launch ubuntu 22.04 container and name it ubc
+lxc launch ubuntu:22.04 ubc
 lxc ls
 
 ```
@@ -42,6 +51,10 @@ apt-get update
 apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
+
+
+
+
 
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF
@@ -94,8 +107,8 @@ lxc ls
 
 
 
-```
 
+```
 
 
 
@@ -103,11 +116,11 @@ lxc ls
 # example: run a script at boot
 
 
-Same as previous but add run once script using runcmd: in yaml.
+Same as previous example but add run-once script using `runcmd:` in cloud-init.yml.
 
-When cloud-init sees runcmd:, then it generates `/var/lib/cloud/instance/scripts/runcmd` and runs it.
+When cloud-init sees runcmd element, then it generates `/var/lib/cloud/instance/scripts/runcmd` and runs it.
 
-In this example I intentionally fail script1 in order to see if the next script will run or whether all subsequent scripts fail.
+In this example I intentionally make script1 fail in order to see if the next script will run or whether all subsequent scripts fail.
 
 
 ```bash
@@ -116,6 +129,10 @@ apt-get update
 apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
+
+
+
+
 
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF
@@ -200,9 +217,9 @@ lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 lxc profile add ubc ubcp
 lxc ls
 
-# check for errors from boot scripts:
-lxc exec ubc -- less -RSi /var/log/cloud-init.log | grep 'Exit code:'
-lxc exec ubc -- less -RSi /var/log/cloud-init-output.log | grep WARNING
+
+lxc exec ubc -- less -RSi /var/log/cloud-init.log
+lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
 
 
 ```
