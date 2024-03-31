@@ -1,8 +1,4 @@
-#!/usr/bin/env bash
-
-
-
-
+#!/usr/bin/env bash#!/usr/bin/env bash
 
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF

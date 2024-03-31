@@ -1,6 +1,5 @@
-{% block bash_shebang %}{% endblock %}
-
 {% import 'readme/macros.j2' as macros %}
+{%- block bash_shebang %}#!/usr/bin/env bash{% endblock %}
 
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF

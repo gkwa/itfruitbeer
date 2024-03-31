@@ -52,9 +52,7 @@ apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
 
-
-
-
+#!/usr/bin/env bash
 
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF
@@ -130,9 +128,7 @@ apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
 
-
-
-
+#!/usr/bin/env bash
 
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF

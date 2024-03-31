@@ -1,5 +1,6 @@
 {% extends 'readme/script02/commands.sh.j2' %}
 
+
 {% block footer_commands %}
 lxc exec ubc -- less -RSi /var/log/cloud-init.log
 lxc exec ubc -- less -RSi /var/log/cloud-init-output.log
