@@ -98,7 +98,7 @@ lxc ls
 # example: run some scripts at boot
 
 
-Same as previous example but add run-once script using `runcmd:` in cloud-init.yml.
+Same as previous example but add run-once script using [`runcmd:`](https://cloudinit.readthedocs.io/en/latest/reference/examples.html#run-commands-on-first-boot) in cloud-init.yml.
 
 When cloud-init sees runcmd element, then it generates `/var/lib/cloud/instance/scripts/runcmd` and runs it.
 
