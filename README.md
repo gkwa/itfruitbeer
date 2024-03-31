@@ -1,6 +1,7 @@
 <!--TOC-->
 
 - [Purpose](#purpose)
+- [Getting started: install lxc](#getting-started-install-lxc)
 - [example: create container based off ubuntu 22.04](#example-create-container-based-off-ubuntu-2204)
 - [example: assign a network profile to container](#example-assign-a-network-profile-to-container)
 - [example: run a script at boot](#example-run-a-script-at-boot)
@@ -11,6 +12,13 @@
 
 Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this stuff, so I'm writing it down.  Each example is mean to include all steps.
 
+# Getting started: install lxc
+
+
+
+
+
+
 # example: create container based off ubuntu 22.04
 
 
@@ -19,11 +27,13 @@ Create readme for lxc and cloud-init quickstart guide.  I keep forgetting this s
 
 
 ```bash
+
 # lxc install
 apt-get update
 apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
+
 
 
 # remove container ubc if it exists
@@ -37,8 +47,6 @@ lxc ls
 
 
 
-
-
 # example: assign a network profile to container
 
 
@@ -46,11 +54,13 @@ Use cloud-init to allow me ssh access, install some some packages and reboot con
 
 
 ```bash
+
 # lxc install
 apt-get update
 apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
+
 
 
 # create cloud-init for container ubc
@@ -109,8 +119,6 @@ lxc ls
 
 
 
-
-
 # example: run a script at boot
 
 
@@ -122,11 +130,13 @@ In this example I intentionally make script1 fail in order to see if the next sc
 
 
 ```bash
+
 # lxc install
 apt-get update
 apt-get --assume-yes install lxc lxc-utils jq
 lxd init --auto
 lxc ls
+
 
 
 # create cloud-init for container ubc
