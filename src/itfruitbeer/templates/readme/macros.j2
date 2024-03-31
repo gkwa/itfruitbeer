@@ -3,7 +3,6 @@ lxc ls --format=json | jq 'map(select(.name == "{{ name }}")) | .[] | .name' | x
 {%- endmacro %}
 
 {% macro rmprofile(name) -%}
-lxc profile list --format=json |
-    jq --raw-output 'map(select(.name == "{{ name }}") | .name) | first // ""' |
+lxc profile list --format=json | jq --raw-output 'map(select(.name == "{{ name }}") | .name) | .[]' |
     xargs --no-run-if-empty --max-args=1 lxc profile delete
 {%- endmacro %}
