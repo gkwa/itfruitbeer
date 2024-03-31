@@ -42,7 +42,7 @@ lxc ls
 # example: assign a network profile to a container
 
 
-Use cloud-init to allow me ssh access, install some some packages and reboot contanier.
+Use [cloud-init](https://cloudinit.readthedocs.io/en/latest/howto/run_cloud_init_locally.html#lxd) to allow me ssh access, install some some packages and reboot contanier.
 
 
 ```bash
