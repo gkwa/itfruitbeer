@@ -33,8 +33,7 @@ EOF
 lxc ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} lxc delete --force {}
 
 # remove ubcp network profile if it exists
-lxc profile list --format=json | jq --raw-output 'map(select(.name == "ubcp") | .name) | .[]' |
-    xargs --no-run-if-empty --max-args=1 lxc profile delete
+lxc profile list --format=json | jq --raw-output 'map(select(.name == "ubcp") | .name) | .[]' | xargs --no-run-if-empty --max-args=1 lxc profile delete
 
 # create container profile ubcp
 lxc profile create ubcp
