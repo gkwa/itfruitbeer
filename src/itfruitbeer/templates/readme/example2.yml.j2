@@ -4,6 +4,7 @@
 Use [cloud-init](https://cloudinit.readthedocs.io/en/latest/howto/run_cloud_init_locally.html#lxd) to allow me ssh access, install some some packages and reboot contanier.
 {% endblock %}
 
-{%- block bash_commands -%}
+{%- block bash_commands %}
+# file: script02.sh
 {%- include 'script02/commands.sh.j2' -%}
 {%- endblock -%}
