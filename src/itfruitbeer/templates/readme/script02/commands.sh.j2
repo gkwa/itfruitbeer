@@ -1,5 +1,5 @@
 {% import 'readme/macros.j2' as macros %}
-{%- block bash_shebang %}#!/usr/bin/env bash{% endblock %}
+{%- block bash_shebang %}{% endblock %}
 
 # create cloud-init for container ubc
 cat >cloud-init-ubc.yml<<EOF
@@ -28,6 +28,5 @@ lxc launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 # assign profile ubcp to container ubc
 lxc profile add ubc ubcp
 lxc ls
-
 {% block footer_commands %}
-{% endblock %}
+{%- endblock %}
