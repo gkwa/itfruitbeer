@@ -15,11 +15,11 @@ Create quicstart for incus and cloud-init.  I keep forgetting this stuff, so I'm
 # getting started: install incus
 
 ```bash
-# incus install
-apt-get update
-apt-get --assume-yes install incus incus-utils jq
-lxd init --auto
-incus ls
+# FIXME: inline these scripts
+curl https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-kibbly-stable-sources-on-ubuntu.sh | sudo bash
+curl https://raw.githubusercontent.com/taylormonacelli/ringgem/master/install-incus-on-ubuntu.sh | sudo bash
+
+incus admin init --auto
 ```
 
 # example: create container based off ubuntu 22.04
@@ -34,7 +34,7 @@ incus ls
 incus ls --format=json | jq 'map(select(.name == "ubc")) | .[] | .name' | xargs --no-run-if-empty -I {} incus delete --force {}
 
 # launch ubuntu 22.04 container and name it ubc
-incus launch ubuntu:22.04 ubc
+incus launch images:ubuntu/22.04 ubc
 incus ls
 ```
 
@@ -87,7 +87,7 @@ incus profile create ubcp
 incus profile edit ubcp <ubcp-net-profile.yml
 
 # create container ubc
-incus launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
+incus launch images:ubuntu/22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 
 # assign profile ubcp to container ubc
 incus profile add ubc ubcp
@@ -181,7 +181,7 @@ incus profile create ubcp
 incus profile edit ubcp <ubcp-net-profile.yml
 
 # create container ubc
-incus launch ubuntu:22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
+incus launch images:ubuntu/22.04 ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 
 # assign profile ubcp to container ubc
 incus profile add ubc ubcp

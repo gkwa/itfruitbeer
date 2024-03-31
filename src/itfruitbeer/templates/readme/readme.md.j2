@@ -9,13 +9,8 @@ Create quicstart for incus and cloud-init.  I keep forgetting this stuff, so I'm
 # getting started: install incus
 
 ```bash
-{%- block initial_setup %}
-# incus install
-apt-get update
-apt-get --assume-yes install incus incus-utils jq
-lxd init --auto
-incus ls
-{%- endblock %}
+# FIXME: inline these scripts
+{% include 'install-incus/commands.sh.j2' %}
 ```
 
 # example: create container based off ubuntu 22.04
