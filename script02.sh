@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# create cloud-init for container ubc
+# create a cloud-init config for container ubc
 cat >cloud-init-ubc.yml <<EOF
 #cloud-config
 package_update: true

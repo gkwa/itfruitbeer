@@ -46,7 +46,7 @@ Use cloud-init to allow me ssh access, install some some packages and reboot con
 
 
 ```bash
-# create cloud-init for container ubc
+# create a cloud-init config for container ubc
 cat >cloud-init-ubc.yml <<EOF
 #cloud-config
 package_update: true
@@ -106,7 +106,7 @@ In this example I intentionally make script1 fail in order to see if the next sc
 
 
 ```bash
-# create cloud-init for container ubc
+# create a cloud-init config for container ubc
 cat >cloud-init-ubc.yml <<EOF
 #cloud-config
 package_update: true

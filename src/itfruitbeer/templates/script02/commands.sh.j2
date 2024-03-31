@@ -1,6 +1,6 @@
 {% import 'readme/macros.j2' as macros %}
 {%- block bash_shebang %}{% endblock %}
-# create cloud-init for container ubc
+# create a cloud-init config for container ubc
 cat >cloud-init-ubc.yml <<EOF
 {% include 'readme/cloud-init.yml.j2' %}
 {%- block cloud %}{% endblock -%}
