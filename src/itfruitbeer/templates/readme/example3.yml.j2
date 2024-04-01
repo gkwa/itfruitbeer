@@ -17,6 +17,6 @@ Check last 10 lines or so from here and you'll notice the `touch /tmp/$(date +%s
 {% endblock %}
 
 {%- block bash_commands %}
-# script03.sh
+# {{ data[3].outfile }}
 {%- include 'script03/commands.sh.j2' %}
 {%- endblock %}

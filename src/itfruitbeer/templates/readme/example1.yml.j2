@@ -6,6 +6,6 @@
 {% endblock %}
 
 {%- block bash_commands %}
-# script01.sh
+# {{ data[1].outfile }}
 {%- include 'script01/commands.sh.j2' %}
 {%- endblock %}

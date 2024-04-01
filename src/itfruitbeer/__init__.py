@@ -15,18 +15,18 @@ class Script:
 
 
 def main() -> int:
-    rendered = main2.render_template("readme/readme.md.j2")
-    outfile = pathlib.Path("README.md")
-    outfile.write_text(rendered)
-    toc = md_toc.build_toc(outfile)
-    md_toc.write_string_on_file_between_markers(outfile, toc, "<!--TOC-->")
-
     scripts = [
         Script(outfile="incus.sh", tmpl="install-incus/script.sh.j2"),
         Script(outfile="script01.sh", tmpl="script01/script.sh.j2"),
         Script(outfile="script02.sh", tmpl="script02/script.sh.j2"),
         Script(outfile="script03.sh", tmpl="script03/script.sh.j2"),
     ]
+
+    rendered = main2.render_template("readme/readme.md.j2", data=scripts)
+    outfile = pathlib.Path("README.md")
+    outfile.write_text(rendered)
+    toc = md_toc.build_toc(outfile)
+    md_toc.write_string_on_file_between_markers(outfile, toc, "<!--TOC-->")
 
     for script in scripts:
         rendered = main2.render_template(script.tmpl)
