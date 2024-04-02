@@ -5,12 +5,13 @@
 - [example: create container based off ubuntu 22.04](#example-create-container-based-off-ubuntu-2204)
 - [example: assign a network profile to a container](#example-assign-a-network-profile-to-a-container)
 - [example: run some scripts at boot](#example-run-some-scripts-at-boot)
+- [External links](#external-links)
 
 <!--TOC-->
 
 # purpose
 
-Maintain a quickstart guide for incus and cloud-init.  I keep forgetting this stuff, so I'm writing it down.
+Maintain a quickstart guide for incus (previously lxc) and cloud-init.  I keep forgetting this stuff, so I'm writing it down.
 
 # getting started: install incus
 
@@ -202,3 +203,10 @@ We can see failure on script1 in cloud init logs.
 Search for "Exit code" in `/var/log/cloud-init.log`.  There it shows the runcmd failed since script1 exited with nonzero exit code.
 
 Check last 10 lines or so from here and you'll notice the `touch /tmp/$(date +%s).txt` from script2 never ran since script1 failed.
+
+
+# External links
+- [incus: first steps](https://linuxcontainers.org/incus/docs/main/tutorial/first_steps/)
+- [incus with cloud-init](https://linuxcontainers.org/incus/docs/main/cloud-init/)
+- [Stéphane Graber's website](https://stgraber.org/)
+- [Simos Xenitellis site](https://blog.simos.info/)
