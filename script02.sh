@@ -39,7 +39,7 @@ incus profile list --format=json | jq --raw-output 'map(select(.name == "ubcp") 
 incus profile create ubcp
 incus profile edit ubcp <ubcp-net-profile.yml
 
-# create container ubc
+# create container named ubc that contains cloud-init
 incus launch images:ubuntu/22.04/cloud ubc --config=user.user-data="$(cat cloud-init-ubc.yml)"
 
 # assign profile ubcp to container ubc
